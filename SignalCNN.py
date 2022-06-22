@@ -15,8 +15,8 @@ batchsize = 100
 epochs = 10
 steps_per_epoch=10
 
-frametype= 'Samples'
-# frametype= 'Concurrent'
+#frametype= 'Samples'
+frametype= 'Concurrent'
 #frametype= 'Scalogram/WxCWT'
 #frametype= 'Scalogram/TWxCWT'
 #frametype= 'Scalogram/TsxSTFT'
@@ -27,7 +27,7 @@ def RunCNN():
 
 
   ds_train = keras.preprocessing.image_dataset_from_directory(
-    '/Users/bradpaiva/Documents/Python/CNN/'+frametype,
+    '/Users/bradpaiva/Documents/Python/Masters-Thesis/'+frametype,
     labels = 'inferred',
     label_mode = "int",
     color_mode = 'rgb',
@@ -40,7 +40,7 @@ def RunCNN():
     )
 
   ds_validation = keras.preprocessing.image_dataset_from_directory(
-    '/Users/bradpaiva/Documents/Python/CNN/'+frametype,
+    '/Users/bradpaiva/Documents/Python/Masters-Thesis/'+frametype,
     labels = 'inferred',
     label_mode = "int",
     color_mode = 'rgb',
@@ -67,7 +67,7 @@ def RunCNN():
   	layers.Conv2D(32, 3, padding = 'same'),
   	layers.MaxPooling2D(),
   	layers.Flatten(),
-  	layers.Dense(10),
+  	layers.Dense(28),
   ])
 
   model.compile(optimizer='adam', 
@@ -82,5 +82,8 @@ def RunCNN():
       validation_steps=2
   )
 
-  predictions = model.predict(val_dataset)
-  print(predictions)
+  # predictions = model.predict(val_dataset)
+  # print(predictions)
+
+
+RunCNN()

@@ -39,31 +39,38 @@ def ScalDatasetGen():
     samples = 7000
     numclasses = 7
     for i in tqdm(range(int(samples/numclasses))):
-        AM,t, SamplingFrequency= RanAMSignal()
+        CarrierFreq = RanCarrierFreq()
+        AM,t, SamplingFrequency= RanAMSignal(CarrierFreq)
         Scalogram(AM,'AM',index=i)
         del(AM)
     for i in tqdm(range(int(samples/numclasses))):
-        FM,t, SamplingFrequency = RanFMSignal()
+        CarrierFreq = RanCarrierFreq()
+        FM,t, SamplingFrequency = RanFMSignal(CarrierFreq)
         Scalogram(FM, 'FM', index=i)
         del(FM)
     for i in tqdm(range(int(samples/numclasses))):
-        ASK,t, SamplingFrequency = RanASKSignal()
+        CarrierFreq = RanCarrierFreq()
+        ASK,t, SamplingFrequency = RanASKSignal(CarrierFreq)
         Scalogram(ASK,'ASK',index=i)
         del(ASK)
     for i in tqdm(range(int(samples/numclasses))):
-        FSK,t, SamplingFrequency = RanFSKSignal()
+        CarrierFreq = RanCarrierFreq()
+        FSK,t, SamplingFrequency = RanFSKSignal(CarrierFreq)
         Scalogram(FSK,'FSK',index=i)
         del(FSK)
     for i in tqdm(range(int(samples/numclasses))):
-        PSK,t, SamplingFrequency = RanPSKSignal()
+        CarrierFreq = RanCarrierFreq()
+        PSK,t, SamplingFrequency = RanPSKSignal(CarrierFreq)
         Scalogram(PSK,'PSK',index=i)
         del(PSK)
     for i in tqdm(range(int(samples/numclasses))):
-        QPSK,t, SamplingFrequency = RanQPSKSignal()
+        CarrierFreq = RanCarrierFreq()
+        QPSK,t, SamplingFrequency = RanQPSKSignal(CarrierFreq)
         Scalogram(QPSK,'QPSK',index=i)
         del(QPSK)
     for i in tqdm(range(int(samples/numclasses))):
-        QAM16,t, SamplingFrequency = RanQAM16Signal()
+        CarrierFreq = RanCarrierFreq()
+        QAM16,t, SamplingFrequency = RanQAM16Signal(CarrierFreq)
         Scalogram(QAM16,'QAM16',index=i)
         del(QAM16)
     return

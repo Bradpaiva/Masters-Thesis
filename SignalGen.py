@@ -20,6 +20,10 @@ c = constant()
 
 # t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
 
+def RanCarrierFreq():
+    CarrierFreq = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
+    return CarrierFreq
+
 def RanSignalGen(): #Generates random analog signal
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
     y = 0
@@ -52,18 +56,16 @@ def RanBinaryGen2(): #generates random binary array (length = bits)
         m.append(random.randint(0, 1))   # message signal (binary)
     return m
 
-def RanAMSignal(): #Amplitude Modulation (OOK) with random carrier frequency and random analog signal
+def RanAMSignal(CarrierFreq): #Amplitude Modulation (OOK) with random carrier frequency and random analog signal
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
-    CarrierFreq = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
     RandomSignal = RanSignalGen()
     carrier = np.sin(CarrierFreq * t)
     y = carrier * RandomSignal
     y = y+np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return y,t, c.SamplingFrequency
 
-def RanFMSignal():
+def RanFMSignal(CarrierFreq):
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
-    CarrierFreq = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
     b = 15
     data = RanSignalGen()
     phi = CarrierFreq*t + b * data
@@ -71,18 +73,16 @@ def RanFMSignal():
     fm = fm + np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return fm,t, c.SamplingFrequency
 
-def RanASKSignal(): #Amplitude shift keying with random carrier frequency and binary signal
+def RanASKSignal(CarrierFreq): #Amplitude shift keying with random carrier frequency and binary signal
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
-    CarrierFreq = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
     RandomSignal = RanBinaryGen()
     carrier = np.sin(CarrierFreq * t)
     y = carrier * RandomSignal
     y = y+np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return y,t, c.SamplingFrequency
 
-def RanFSKSignal(): #Frequency shift keying with random carrier frequency and binary signal
+def RanFSKSignal(CarrierFreq): #Frequency shift keying with random carrier frequency and binary signal
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
-    CarrierFreq = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
     data_in_temp = []
     for x in range(int(c.BinaryFrequency*c.TotalTime)):
         data_in_temp.append(random.randint(0, 1))
@@ -98,11 +98,11 @@ def RanFSKSignal(): #Frequency shift keying with random carrier frequency and bi
     y = y+np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return y,t, c.SamplingFrequency
 
-def RanPSKSignal():
+def RanPSKSignal(CarrierFreq):
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
     Xpsk=np.zeros(c.TotalTime*c.SamplingFrequency)
     I = RanBinaryGen2()
-    fc = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
+    fc = CarrierFreq
     x1 = np.sin(2 * np.pi * fc * t)
     x2 = -1*np.sin(2 * np.pi * fc * t)
     tb = c.SamplingFrequency/c.BinaryFrequency
@@ -118,11 +118,11 @@ def RanPSKSignal():
     Xpsk = Xpsk+np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return Xpsk,t, c.SamplingFrequency
 
-def RanQPSKSignal():
+def RanQPSKSignal(CarrierFreq):
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
     Xpsk=np.zeros(c.TotalTime*c.SamplingFrequency)
     I = RanBinaryGen2()
-    fc = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
+    fc = CarrierFreq
     x1 = np.sin(2 * np.pi * fc * t + (2 * np.pi *45/360))
     x2 = np.sin(2 * np.pi * fc * t + (2 * np.pi *135/360))
     x3 = np.sin(2 * np.pi * fc * t + (2 * np.pi *225/360))
@@ -145,11 +145,11 @@ def RanQPSKSignal():
     Xpsk = Xpsk+np.random.normal(0, c.NoiseRatio, size=c.SamplingFrequency*c.TotalTime) #Add WGN
     return Xpsk,t, c.SamplingFrequency
 
-def RanQAM16Signal():
+def RanQAM16Signal(CarrierFreq):
     t = np.linspace(0,c.TotalTime, c.SamplingFrequency*c.TotalTime)
     QAM=np.zeros(c.TotalTime*c.SamplingFrequency)
     I = RanBinaryGen2()
-    fc = random.randint(c.CarrierFreqMin,c.CarrierFreqMax)
+    fc = CarrierFreq
 
     tb = 2*c.SamplingFrequency/c.BinaryFrequency
     t1=0
